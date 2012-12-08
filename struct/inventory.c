@@ -1,8 +1,8 @@
-#include <stdio.h>
 #include "readline.h"
 
 #define NAME_LEN 25
-#define MAX_PARTS 100
+#define MAX_PARTS 200
+
 struct part{
 	int number;
 	char name[NAME_LEN+1];
@@ -26,6 +26,7 @@ int main(void){
 		printf("u--更新零件\n");
 		printf("p--显示零件\n");
 		printf("q--退出程序\n");
+		printf("请输入:");
 		scanf(" %c",&code);
 		
 		while(getchar() != '\n'){;}
@@ -44,9 +45,9 @@ int main(void){
 
 int find_part(int number){
 	int i;
-	for(i = 0; i< number; i++){
+	for(i = 0; i< num_parts; i++){
 		if(inventory[i].number == number){
-			return 1;
+			return i;
 		}
 	}
 	return -1;
@@ -90,14 +91,14 @@ void search(void){
 }
 
 void update(void){
-	int i, number,change;
+	int i, number,change; 
 	
 	printf("请输入零件编号:");
 	scanf("%d",&number);
 	i = find_part(number);
 	
 	if( i >= 0){
-		printf("请输入零件要修改的数量:");
+		printf("请输入需要增加的库存数量:");
 		scanf("%d",&change);
 		inventory[i].on_hand += change;
 	}else{
@@ -109,6 +110,6 @@ void print(void){
 	int i;
 	printf("零件编号\t零件名称\t零件数量\n");
 	for(i = 0; i < num_parts; i++){
-		printf("%7d		%-25s%11d",inventory[i].number,inventory[i].name,inventory[i].on_hand);
+		printf("%7d		%-25s%11d\n",inventory[i].number,inventory[i].name,inventory[i].on_hand);
 	}
 }
